@@ -1,3 +1,5 @@
+
+
 /** @format */
 
 import { ClerkLoaded, ClerkLoading, SignIn } from "@clerk/nextjs";
@@ -6,7 +8,7 @@ import React from "react";
 
 export default function Page() {
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center bg-login bg-cover bg-center">
       <ClerkLoaded>
         <SignIn />
       </ClerkLoaded>
