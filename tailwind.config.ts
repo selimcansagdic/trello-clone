@@ -20,7 +20,10 @@ const config = {
     extend: {
       backgroundImage: {
         "login": "url('/login_bg.jpg')",
+        "bgg": "url('/bgg.jpeg')",
       },
+
+      
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
