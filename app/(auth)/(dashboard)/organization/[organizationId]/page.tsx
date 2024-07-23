@@ -1,20 +1,18 @@
-/** @format */
+import { db } from "@/lib/prismadb";
+import { Board } from "./board";
+import { Form } from "./form";
 
-import { create } from "@/actions/create-Board";
-import { Button } from "@/components/ui/button";
-
-// "use client";
-
-
-const OrganizationPage = () => {
-  
+const OrganizationPage = async () => {
+  const boards = await db.board.findMany();
 
   return (
-    <div>
-      <form action={create}>
-        <input id="title" name="title" required placeholder="Enter a board tittle" className="border-black border p-1" />
-        <Button type="submit" className="bg-blue-500 text-white p-1">Create Board</Button>
-      </form>
+    <div className="flex flex-col space-y-4">
+      <Form />
+      <div className="space-y-2">
+        {boards.map((board) => (
+          <Board key={board.id} title={board.title} id={board.id} />
+        ))}
+      </div>
     </div>
   );
 };
