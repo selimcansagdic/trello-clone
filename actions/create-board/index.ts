@@ -1,13 +1,13 @@
 "use server";
-import { auth } from "@clerk/nextjs";
-import { InputType, ReturnType } from "./types";
-import { db } from "@/lib/prismadb";
-import { revalidatePath } from "next/cache";
 import { createSafeAction } from "@/lib/create-safe-action";
+import { db } from "@/lib/prismadb";
+import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 import { CreateBoard } from "./schema";
+import { InputType, ReturnType } from "./types";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-  const { userId } = auth();
+  const { userId } =  auth();
 
   if (!userId) {
     return {
@@ -24,14 +24,14 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         title,
       },
     });
+
+    revalidatePath(`api/boards/${board.id}`);
+    return { data: board };
   } catch (error) {
     return {
       error: "Failed to create.",
     };
   }
-
-  revalidatePath(`api/boards/${board.id}`);
-  return { data: board };
 };
 
 export const createBoard = createSafeAction(CreateBoard, handler);
