@@ -41,6 +41,7 @@
     "tailwindcss": "3.4.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.4.5",
+    "unsplash-js": "^7.0.19",
     "usehooks-ts": "^3.1.0",
     "zoc": "^0.0.3",
     "zod": "^3.23.8",
