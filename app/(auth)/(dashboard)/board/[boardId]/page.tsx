@@ -1,3 +1,9 @@
-export const page = () => {
-  return <div>page</div>;
+const BoardPage = () => {
+  return (
+    <div>
+      <h1>Board Page</h1>
+    </div>
+  );
 };
+
+export default BoardPage;
