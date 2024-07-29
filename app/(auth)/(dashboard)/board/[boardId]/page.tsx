@@ -1,3 +1,3 @@
-export const BoardIdPage = () => {
-  return <div>Board ID!</div>;
+export const page = () => {
+  return <div>page</div>;
 };
