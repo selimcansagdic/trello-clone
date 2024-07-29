@@ -3,6 +3,7 @@
 "use client";
 
 import Logo from "@/components/logo";
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { ClerkLoaded, ClerkLoading, UserButton, useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
@@ -12,10 +13,11 @@ export const Navbar = () => {
   const { user } = useUser();
 
   return (
-    <div className="fixed top-0 w-full h-14 px-4 border-b shadow-sm  text-white text-3xl flex items-center">
+    <div className="fixed top-0 w-full h-14 px-4 border-b shadow-sm  text-3xl flex items-center">
       <div className="md:max-w-screen-2xl mx-auto flex items-center w-full justify-between ">
         <Logo />
         <div className="space-x-4 md:block md:w-auto lg:flex items-center justify-between w-full">
+          <ModeToggle />
           <ClerkLoaded>
             {user ? (
               <UserButton afterSignOutUrl="/sign-in" />

@@ -16,12 +16,12 @@ interface FormInputProps {
   disabled?: boolean;
   errors?: Record<string, string[] | undefined>;
   defaultValue?: string;
-  classname?: string;
+  className?: string;
   onBlur?: () => void;
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  ({ id, label, type, placeholder, required, disabled, errors, classname, defaultValue = "", onBlur }, ref) => {
+  ({ id, label, type, placeholder, required, disabled, errors, className, defaultValue = "", onBlur }, ref) => {
     const { pending } = useFormStatus();
     return (
       <div className="space-y-2">
@@ -41,7 +41,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             placeholder={placeholder}
             defaultValue={defaultValue}
             disabled={pending || disabled}
-            className={cn("text-sm px-2 py-1 h-7", classname)}
+            className={cn("text-sm px-2 py-1 h-7", className)}
             aria-describedby={`${id}-error`}
           />
         </div>

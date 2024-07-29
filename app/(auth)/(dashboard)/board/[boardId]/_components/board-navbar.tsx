@@ -1,26 +1,20 @@
+import { Board } from "@prisma/client";
+import { BoardTitleForm } from "./board-title-form";
+import { BoardOptions } from "./board-options";
 
-import {db} from "@/lib/prismadb";
-import {auth} from "@clerk/nextjs/server";
-
-interface   BoardNavbarProps {
-    id:string
+interface BoardNavbarProps {
+  data: Board;
 }
 
-export const BoardNavbar = async({
-    id
-}:  BoardNavbarProps) => {
-    const { orgId } = auth();
-    const board = await db.board.findUnique({
-        where: {
-          id,
-          orgId: orgId! 
-        },
-      });
-    return (
-        <div>
-        Board Navbar!
-        </div>
-    );
-    }
+export const BoardNavbar = async ({ data }: BoardNavbarProps) => {
+  return (
+    <div className="w-full h-14 z-[40] bg-black/50 fixed top-14 flex items-center px-6 gap-x-4 text-white">
+      <BoardTitleForm data={data} />
+      <div className="ml-auto">
+        <BoardOptions id={data.id} />
+      </div>
+    </div>
+  );
+};
 
-    export default BoardNavbar;
+export default BoardNavbar;

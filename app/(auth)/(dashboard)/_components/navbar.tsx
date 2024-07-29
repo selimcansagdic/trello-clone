@@ -1,14 +1,16 @@
+"use client";
 /** @format */
-import { Plus } from "lucide-react";
+import { FormPopover } from "@/components/form/form-popover";
 import { Logo } from "@/components/logo";
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
-import { FormPopover } from "@/components/form/form-popover";
+import { Plus } from "lucide-react";
 import { MobileSidebar } from "./mobile-sidebar";
 
 export const Navbar = () => {
   return (
-    <nav className="fixed z-50 top-0 px-4 w-full h-14 border-b shadow-sm bg-white flex items-center">
+    <nav className="fixed z-50 top-0 px-4 w-full h-14 border-b shadow-sm dark:bg-neutral-900 bg-white flex items-center">
       <MobileSidebar />
       <div className="flex items-center gap-x-4">
         <div className="hidden md:flex p-6">
@@ -26,8 +28,9 @@ export const Navbar = () => {
         </FormPopover>
       </div>
       <div className="ml-auto flex items-center gap-x-2">
+        <ModeToggle />
         <OrganizationSwitcher
-          hidePersonal
+          hidePersonal={true}
           afterCreateOrganizationUrl="/organization/:id"
           afterLeaveOrganizationUrl="/select-org"
           afterSelectOrganizationUrl="/organization/:id"
