@@ -10,10 +10,9 @@ const OrganizationIdPage = async () => {
 
       <Separator className="my-4" />
       <div className="px-2 md:px-4 "></div>
-     <Suspense fallback={<BoardList.Skeleton/>}>
-
-      <BoardList />
-     </Suspense>
+      <Suspense fallback={<BoardList.Skeleton />}>
+        <BoardList />
+      </Suspense>
     </div>
   );
 };
