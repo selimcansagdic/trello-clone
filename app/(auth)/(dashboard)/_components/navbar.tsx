@@ -1,5 +1,4 @@
 "use client";
-/** @format */
 import { FormPopover } from "@/components/form/form-popover";
 import { Logo } from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
