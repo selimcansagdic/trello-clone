@@ -1,4 +1,5 @@
 "use client";
+/** @format */
 import { FormPopover } from "@/components/form/form-popover";
 import { Logo } from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -6,8 +7,10 @@ import { Button } from "@/components/ui/button";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import { Plus } from "lucide-react";
 import { MobileSidebar } from "./mobile-sidebar";
+import { useTheme } from "next-themes";
 
 export const Navbar = () => {
+  const { theme } = useTheme();
   return (
     <nav className="fixed z-50 top-0 px-4 w-full h-14 border-b shadow-sm dark:bg-neutral-900 bg-white flex items-center">
       <MobileSidebar />
@@ -39,6 +42,12 @@ export const Navbar = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+              },
+              organizationSwitcherTrigger: {
+                color: theme === "dark" ? "white" : "#000",
+                "&:hover": {
+                  color: theme === "dark" ? "#798800" : "#000",
+                },
               },
             },
           }}
