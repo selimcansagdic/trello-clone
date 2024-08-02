@@ -1,5 +1,5 @@
 "use client";
-/** @format */
+import { useState, useEffect } from "react";
 import { FormPopover } from "@/components/form/form-popover";
 import { Logo } from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -8,9 +8,28 @@ import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import { Plus } from "lucide-react";
 import { MobileSidebar } from "./mobile-sidebar";
 import { useTheme } from "next-themes";
+import dynamic from "next/dynamic";
+
+const Calendar = dynamic(() => import("@/components/ui/calendar").then((mod) => mod.Calendar), { ssr: false });
 
 export const Navbar = () => {
   const { theme } = useTheme();
+  const [dateTime, setDateTime] = useState<string | null>(null);
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  useEffect(() => {
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" });
+    const formattedTime = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    setDateTime(`${formattedDate} ${formattedTime}`);
+  }, []);
+
+  const toggleCalendar = () => {
+    setShowCalendar(!showCalendar);
+  };
+
+  const calendarClassName = theme === "dark" ? "calendar-dark" : "";
+
   return (
     <nav className="fixed z-50 top-0 px-4 w-full h-14 border-b shadow-sm dark:bg-neutral-900 bg-white flex items-center">
       <MobileSidebar />
@@ -29,7 +48,7 @@ export const Navbar = () => {
           </Button>
         </FormPopover>
       </div>
-      <div className="ml-auto flex items-center gap-x-2">
+      <div className="ml-auto flex items-center gap-x-4">
         <ModeToggle />
         <OrganizationSwitcher
           hidePersonal={true}
@@ -63,6 +82,18 @@ export const Navbar = () => {
             },
           }}
         />
+        <div className="flex items-center gap-x-2">
+          {dateTime && (
+            <Button variant="ghost" onClick={toggleCalendar}>
+              {dateTime}
+            </Button>
+          )}
+        </div>
+        {showCalendar && (
+          <div className={`absolute top-16 right-4 ${calendarClassName}`}>
+            <Calendar />
+          </div>
+        )}
       </div>
     </nav>
   );
