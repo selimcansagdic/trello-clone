@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ListItem } from "./list-item";
 import { ListWithCards } from "@/types";
 
+
 interface ListContainerProps {
   data: ListWithCards[];
   boardId: string;
