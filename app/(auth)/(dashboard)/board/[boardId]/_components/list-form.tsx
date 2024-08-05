@@ -10,14 +10,12 @@ import { FormSubmit } from "@/components/form/form-submit";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { useAction } from "@/hooks/use-action";
-import { createList } from "@/actions/create-list"; 
+import { createList } from "@/actions/create-list";
 import { toast } from "sonner";
 
 export const ListForm = () => {
-   
-   const router = useRouter();
-    const params = useParams();
-
+  const router = useRouter();
+  const params = useParams();
 
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
@@ -46,7 +44,6 @@ export const ListForm = () => {
     },
   });
 
-
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
       disableEditing();
@@ -55,39 +52,31 @@ export const ListForm = () => {
 
   useEventListener("keydown", onKeyDown);
   useOnClickOutside(formRef, disableEditing);
-  
-   const onSubmit = (formData: FormData) => {
+
+  const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
     const boardId = formData.get("boardId") as string;
 
-     execute({ title, boardId });
-    }
-  
+    execute({ title, boardId });
+  };
 
   if (isEditing) {
     return (
       <ListWrapper>
         <form action={onSubmit} ref={formRef} className="w-full p-2 rounded-md bg-white space-y-4 shadow-md">
           <FormInput
-          errors={fieldErrors}
+            errors={fieldErrors}
             id="title"
             ref={inputRef}
             className="text-sm px-2 py-1 h-7 border-transparent font-medium hover:border-input focus-within:border-input transition"
             placeholder="Enter list title..."
           />
-            <input
-            name="boardId"
-            className="hidden"
-            value={params.boardId}
-          />
+          <input name="boardId" className="hidden" value={params.boardId} />
           <div className="flex items-center gap-x-1">
-            <FormSubmit>
-Add List
-            </FormSubmit>
-            <Button onClick={disableEditing} size="sm" variant="ghost" >
-              <X className="h-5 w-5"/>
-              </Button>
-
+            <FormSubmit>Add List</FormSubmit>
+            <Button onClick={disableEditing} size="sm" variant="ghost">
+              <X className="h-5 w-5" />
+            </Button>
           </div>
         </form>
       </ListWrapper>
