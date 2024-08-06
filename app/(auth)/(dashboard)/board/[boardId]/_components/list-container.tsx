@@ -8,7 +8,7 @@ import { ListWithCards } from "@/types";
 interface ListContainerProps {
   data: ListWithCards[];
   boardId: string;
-}
+};
 
 export const ListContainer = ({ data, boardId }: ListContainerProps) => {
   const [orderedData, setOrderedData] = useState(data);
