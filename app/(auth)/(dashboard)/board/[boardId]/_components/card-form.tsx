@@ -9,8 +9,7 @@ import { createCard } from "@/actions/create-card";
 import { useRef, ElementRef, KeyboardEventHandler, forwardRef } from "react";
 import { useParams } from "next/navigation";
 import { useOnClickOutside, useEventListener } from "usehooks-ts";
-import {toast} from "sonner";
-import { log } from "console";
+import { toast } from "sonner";
 
 interface CardFormProps {
   listId: string;
@@ -20,51 +19,54 @@ interface CardFormProps {
 }
 
 export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({ listId, enableEditing, disableEditing, isEditing }, ref) => {
+  const params = useParams();
+  const formRef = useRef<ElementRef<"form">>(null);
 
-const params = useParams();
-const formRef = useRef<ElementRef<"form">>(null);
-
-const {execute, fieldErrors} = useAction(createCard, {
+  const { execute, fieldErrors } = useAction(createCard, {
     onSuccess: (data) => {
-        toast.success(`Card "${data.title}" created`);
-        formRef.current?.reset();
+      toast.success(`Card "${data.title}" created`);
+      formRef.current?.reset();
     },
     onError: (error) => {
-        toast.error(error);
-    }
-});
+      toast.error(error);
+    },
+  });
 
-
-const onKeyDown = (e: KeyboardEvent) => {
+  const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-        disableEditing();
+      disableEditing();
     }
-}
+  };
 
-useOnClickOutside(formRef, disableEditing);
-useEventListener("keydown", onKeyDown);
+  useOnClickOutside(formRef, disableEditing);
+  useEventListener("keydown", onKeyDown);
 
-const onTextareakeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+  const onTextareakeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        formRef.current?.requestSubmit();
+      e.preventDefault();
+      formRef.current?.requestSubmit();
     }
-}
+  };
 
-const onSubmit = (formData: FormData) => {
+  const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
     const listId = formData.get("listId") as string;
     const boardId = params.boardId as string;
 
-    
-
-    execute({title, listId, boardId});
-};
+    execute({ title, listId, boardId });
+  };
 
   if (isEditing) {
     return (
       <form ref={formRef} action={onSubmit} className="m-1 py-0.5 px-1 space-y-4">
-        <FormTextarea id="title" name="title" ref={ref} onKeyDown={onTextareakeyDown} placeholder="Enter title for this card..." errors={fieldErrors} />
+        <FormTextarea
+          id="title"
+          name="title"
+          ref={ref}
+          onKeyDown={onTextareakeyDown}
+          placeholder="Enter title for this card..."
+          errors={fieldErrors}
+        />
         <input hidden id="listId" name="listId" value={listId} />
         <div className="flex items-center justify-between gap-x-1">
           <FormSubmit>Add a card</FormSubmit>
