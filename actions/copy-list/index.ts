@@ -1,50 +1,3 @@
-// "use server";
-
-// import { db } from "@/lib/prismadb";
-// import { auth } from "@clerk/nextjs/server";
-// import { InputType, ReturnType } from "./types";
-// import { revalidatePath } from "next/cache";
-// import { CopyList } from "./schema";
-// import { createSafeAction } from "@/lib/create-safe-action";
-
-// const handler = async (data: InputType): Promise<ReturnType> => {
-//   const { userId, orgId } = auth();
-//   if (!userId || !orgId) {
-//     return {
-//       error: "Unauthorized.",
-//     };
-//   }
-
-//   const { title, id, boardId } = data;
-//   let list;
-
-//   try {
-//     list = await db.list.update({
-//       where: {
-//         id,
-//         boardId,
-//         board: {
-//           orgId,
-//         },
-//       },
-//       data: {
-//         title,
-//       },
-//     });
-//   } catch (error) {
-//     return {
-//       error: "Failedto update",
-//     };
-//   }
-
-//   revalidatePath(`/board/${boardId}`);
-//   return {
-//     data: list,
-//   };
-// };
-// export const updateList = createSafeAction(UpdateList, handler);
-
-
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
@@ -54,7 +7,6 @@ import { revalidatePath } from "next/cache";
 import { createSafeAction } from "@/lib/create-safe-action";
 import { CopyList } from "./schema";
 
-
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
   if (!userId || !orgId) {
@@ -63,9 +15,9 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   }
 
-  const { id,boardId} = data;
+  const { id, boardId } = data;
   let list;
-  
+
   try {
     const listToCopy = await db.list.findUnique({
       where: {
@@ -76,9 +28,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         },
       },
       include: {
-       
-cards: true,
-       
+        cards: true,
       },
     });
     if (!listToCopy) {
@@ -88,35 +38,31 @@ cards: true,
     }
 
     const lastList = await db.list.findFirst({
- where:{boardId},
-  orderBy:{order:"desc"},
-  select:{order:true}
-      });
-const newOrder = lastList ? lastList.order + 1 : 0;
+      where: { boardId },
+      orderBy: { order: "desc" },
+      select: { order: true },
+    });
+    const newOrder = lastList ? lastList.order + 1 : 0;
 
-list = await db.list.create({
-  data: {
-    boardId: listToCopy.boardId,
-    title: ` ${listToCopy.title}-Copy`,
-    order: newOrder,
-    cards: {
-      createMany: {
-        data: listToCopy.cards.map((card) => ({
-          title: card.title,
-          order: card.order, 
-          description: card.description,
-  }
-        )),
+    list = await db.list.create({
+      data: {
+        boardId: listToCopy.boardId,
+        title: ` ${listToCopy.title}-Copy`,
+        order: newOrder,
+        cards: {
+          createMany: {
+            data: listToCopy.cards.map((card) => ({
+              title: card.title,
+              order: card.order,
+              description: card.description,
+            })),
+          },
+        },
       },
-    },
-  },  
-  include: {
-    cards: true,
-  },
-});
-
-
-   
+      include: {
+        cards: true,
+      },
+    });
   } catch (error) {
     return {
       error: "Failed to copy list.",

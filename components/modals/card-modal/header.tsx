@@ -10,7 +10,6 @@ import { useAction } from "@/hooks/use-action";
 import { updateCard } from "@/actions/update-card";
 import { toast } from "sonner";
 
-
 interface HeaderProps {
   data: CardWithList;
 }
@@ -24,7 +23,7 @@ export const Header = ({ data }: HeaderProps) => {
       queryClient.invalidateQueries({
         queryKey: ["card", data.id],
       });
-   
+
       toast.success(`Card renamed to "${data.title}".`);
     },
     onError: (error) => {
