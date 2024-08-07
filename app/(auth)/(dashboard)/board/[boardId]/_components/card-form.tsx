@@ -58,7 +58,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({ listId
 
   if (isEditing) {
     return (
-      <form ref={formRef} action={onSubmit} className="m-1 py-0.5 px-1 space-y-4">
+      <form ref={formRef} action={onSubmit} className="m-1 py-0.5 px-1  space-y-4">
         <FormTextarea
           id="title"
           name="title"
@@ -68,7 +68,7 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({ listId
           errors={fieldErrors}
         />
         <input hidden id="listId" name="listId" value={listId} />
-        <div className="flex items-center justify-between gap-x-1">
+        <div className="flex items-center justify-between  gap-x-1">
           <FormSubmit>Add a card</FormSubmit>
           <Button type="button" onClick={disableEditing} size="sm" variant="ghost">
             <X className="h-5 w-5 " />

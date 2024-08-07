@@ -5,6 +5,9 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/provider/theme-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
+import { Query } from "@tanstack/react-query";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,14 +27,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <main>{children}</main>
-          </ThemeProvider>
-          <Toaster richColors />
-        </body>
-      </html>
+      <QueryProvider>
+        <html lang="en">
+          <body className={inter.className}>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+              <main>{children}</main>
+            </ThemeProvider>
+            <Toaster richColors />
+            <ModalProvider />
+          </body>
+        </html>
+      </QueryProvider>
     </ClerkProvider>
   );
 }
