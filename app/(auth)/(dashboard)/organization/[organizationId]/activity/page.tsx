@@ -4,9 +4,11 @@ import { Separator } from "@/components/ui/separator";
 import { ActivityList } from "./_components/activity-list";
 import { checkSubscription } from "@/lib/subscription";
 
-export const ActivityPage = async () => {
-  const isPro = await checkSubscription();
+interface ActivityPageProps {
+  isPro: boolean;
+}
 
+const ActivityPage = ({ isPro }: ActivityPageProps) => {
   return (
     <div className="w-full">
       <Info isPro={isPro} />
@@ -17,5 +19,14 @@ export const ActivityPage = async () => {
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  const isPro = await checkSubscription();
+  return {
+    props: {
+      isPro,
+    },
+  };
+}
 
 export default ActivityPage;
