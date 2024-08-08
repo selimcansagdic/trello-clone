@@ -39,10 +39,11 @@ const MarketingPage = () => {
       <Button className="text-sm md:text-xl text-white dark:text-black bg-purple-600 dark:bg-white size=lg mt-6 max-w-xs md:max-w-2xl text-center mx-auto cursor-pointer asChild hover:bg-purple-700 dark:hover:bg-gray-300">
         <Link href="/sign-up">Get Taskify for Free</Link>
       </Button>
+      <Button className="text-sm md:text-xl text-white dark:text-black bg-purple-600 dark:bg-white size=lg mt-6 max-w-xs md:max-w-2xl text-center mx-auto cursor-pointer asChild hover:bg-purple-700 dark:hover:bg-gray-300">
+        <Link href="/organization/org">Go to Organization</Link>
+      </Button>
     </div>
-    
   );
 };
-
 
 export default MarketingPage;
