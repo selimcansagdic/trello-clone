@@ -59,7 +59,7 @@ export const Description = ({ data }: DescriptionProps) => {
     },
     onError: (error) => {
       console.error("Update Card Error:", error);
-      
+
       toast.error(error);
     },
   });

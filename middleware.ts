@@ -1,12 +1,18 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const isProtectedRoute = createRouteMatcher(["/", "api(/.*)?"]);
+const isProtectedRoute = createRouteMatcher(["/"]);
 
 export default clerkMiddleware((auth, req) => {
+  // Webhook rotası korunmamalıdır.
+  if (req.nextUrl.pathname === "/api/webhook") {
+    return NextResponse.next();
+  }
+
   if (isProtectedRoute(req)) {
     auth().protect();
   }
+
   return NextResponse.next();
 });
 

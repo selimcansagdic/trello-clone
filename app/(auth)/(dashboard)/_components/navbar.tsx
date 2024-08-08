@@ -18,17 +18,20 @@ export const Navbar = () => {
   const [showCalendar, setShowCalendar] = useState(false);
 
   useEffect(() => {
-    const now = new Date();
-    const formattedDate = now.toLocaleDateString("tr-TR", { day: "2-digit", month: "2-digit", year: "numeric" });
-    const formattedTime = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    setDateTime(`${formattedDate} ${formattedTime}`);
+    const interval = setInterval(() => {
+      const date = new Date();
+      const time = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", month: "short", day: "numeric", year: "numeric" });
+      setDateTime(time);
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
   };
 
-  const calendarClassName = theme === "dark" ? "calendar-dark" : "";
+  const calendarClassName = theme === "dark" ? "bg-neutral-900" : "bg-white";
 
   return (
     <nav className="fixed z-50 top-0 px-4 w-full h-14 border-b shadow-sm dark:bg-neutral-900 bg-white flex items-center">
