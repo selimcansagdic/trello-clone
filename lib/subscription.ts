@@ -1,4 +1,4 @@
-"use client";
+
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/prismadb";
 
