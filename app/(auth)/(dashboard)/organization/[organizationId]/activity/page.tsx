@@ -1,3 +1,4 @@
+"use client";
 import { Suspense, useEffect, useState } from "react";
 import { Info } from "../_components/info";
 import { Separator } from "@/components/ui/separator";
